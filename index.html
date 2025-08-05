@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楚汉棋争 - 在线对战平台</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Project Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dynamic-gradient-bg">
+
+    <main class="container">
+        <!-- Main Application Card with Glassmorphism Effect -->
+        <div class="card">
+            
+            <header class="card-header">
+                <div style="font-size: 2rem; margin-bottom: 1rem; color: #333;">
+                    <i class="fa-solid fa-chess-rook" style="color: var(--color-red-piece);"></i>
+                    <i class="fa-solid fa-chess-knight" style="margin: 0 1.5rem; color: var(--color-black-piece);"></i>
+                    <i class="fa-solid fa-chess-rook" style="color: var(--color-red-piece);"></i>
+                </div>
+                <h1>楚汉棋争</h1>
+                <p>创建或加入房间，即刻开始对弈</p>
+            </header>
+
+            <!-- Action Panel: Create or Join a Room (Visible by default) -->
+            <div id="action-panel">
+                <button id="createRoomBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-plus-circle"></i> 创建新对局
+                </button>
+                
+                <div class="divider"><span>或</span></div>
+                
+                <form id="joinRoomForm">
+                    <input type="text" id="roomCodeInput" placeholder="输入6位房间码" maxlength="6" required pattern="[a-zA-Z0-9]{6}">
+                    <button type="submit" id="joinRoomBtn" class="btn btn-join btn-secondary">
+                        加入
+                    </button>
+                </form>
+            </div>
+
+            <!-- Waiting Panel: Shown after creating a room (Initially hidden) -->
+            <div id="waiting-panel" class="hidden">
+                <p>房间已创建，请分享房间码给你的对手：</p>
+                <div id="roomCodeDisplay" title="点击复制">
+                    <span id="displayRoomCode"></span>
+                </div>
+                <div id="copyFeedback"></div>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; color: #4b5563;">
+                    <div class="spinner"></div>
+                    <span>正在等待对手加入...</span>
+                </div>
+            </div>
+
+            <!-- Notification Area: For displaying errors and status messages -->
+            <div id="notification-area"></div>
+            
+            <!-- Card Footer -->
+            <footer style="text-align: center; margin-top: 2rem; color: #6b7280; font-size: 0.9rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1.5rem;">
+                <p><i class="fa-solid fa-shield-halved"></i> 由 Ably 实时技术驱动</p>
+            </footer>
+
+        </div>
+    </main>
+
+    <!-- External and Local Scripts -->
+    <script src="https://cdn.ably.io/lib/ably.min-1.2.js"></script>
+    <script src="index.js"></script>
+
+</body>
+</html>

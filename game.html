@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楚汉棋争 - 对战中</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <main class="container">
+        <!-- Main Game Board Card with Glassmorphism Effect -->
+        <div class="card">
+            <!-- Game Layout Container -->
+            <div class="game-container">
+                
+                <!-- ======================================================= -->
+                <!-- Chessboard Area (Left Side on Desktop)                  -->
+                <!-- ======================================================= -->
+                <section class="board-area">
+                    <div id="board-wrapper">
+                        <!-- The main board grid. JS will render pieces here. -->
+                        <div id="board">
+                            <!-- Placeholder for pieces, indicators, and highlights -->
+                        </div>
+                        <!-- River Text Overlay -->
+                        <div id="river-text">
+                            <span>楚 河</span>
+                            <span>漢 界</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================= -->
+                <!-- Info & Control Panel (Right Side on Desktop)            -->
+                <!-- ======================================================= -->
+                <aside id="info-panel">
+                    
+                    <!-- Game Status Card -->
+                    <div class="card-header" style="margin-bottom: 0;">
+                        <h2><i class="fa-solid fa-chess-rook" style="color: var(--color-red-piece);"></i> 楚汉棋争</h2>
+                        <p id="roomInfo" style="font-size: 0.95rem; color: #4b5563;">房间号: <strong id="roomCodeDisplay">...</strong></p>
+                    </div>
+
+                    <!-- Status Display Bar -->
+                    <div id="gameStatus" class="info">
+                        <div class="spinner" style="width: 1.2rem; height: 1.2rem; border-color: rgba(0,0,0,0.2); border-left-color: #333;"></div>
+                        <span>等待对手连接...</span>
+                    </div>
+
+                    <!-- Player Info Card -->
+                    <div class="card" style="padding: 1.25rem;">
+                        <div class="player-info">
+                            <div id="player-red" class="player-tag red">
+                                <i class="fa-solid fa-user"></i>
+                                <span id="player-red-name">红方</span>
+                            </div>
+                            <span style="font-weight: 700; color: #4b5563;">VS</span>
+                            <div id="player-black" class="player-tag black">
+                                <i class="fa-solid fa-user"></i>
+                                <span id="player-black-name">黑方</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls Card -->
+                    <div class="card" style="padding: 1.25rem;">
+                         <div class="control-buttons">
+                            <button id="undoBtn" class="btn btn-secondary" disabled>
+                                <i class="fa-solid fa-rotate-left"></i> 悔棋
+                            </button>
+                            <button id="surrenderBtn" class="btn btn-primary" style="background: linear-gradient(to right, #dc2626, #b91c1c);" disabled>
+                                <i class="fa-solid fa-flag"></i> 认输
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- Modal Dialog for Game Events                                        -->
+    <!-- Its content will be dynamically populated by game.js                -->
+    <!-- =================================================================== -->
+    <dialog id="game-modal">
+        <div class="modal-content">
+            <h2 id="modal-title">游戏结束</h2>
+            <p id="modal-text">恭喜你，你获得了胜利！</p>
+            <div class="modal-actions">
+                <!-- Buttons like "Play Again" or "Back to Lobby" will be added here by JS -->
+                <button id="modal-action-primary" class="btn btn-primary">返回大厅</button>
+                <button id="modal-action-secondary" class="btn" style="background: #6b7280; color: white;">关闭</button>
+            </div>
+        </div>
+    </dialog>
+
+
+    <!-- =================================================================== -->
+    <!-- Scripts                                                             -->
+    <!-- =================================================================== -->
+    <!-- Ably Real-time Library -->
+    <script src="https://cdn.ably.io/lib/ably.min-1.2.js"></script>
+    
+    <!-- Game Logic Script -->
+    <script src="game.js"></script>
+
+</body>
+</html>

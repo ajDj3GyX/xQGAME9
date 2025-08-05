@@ -1,0 +1,556 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+/**
+ * style.css
+ * 
+ * Design Philosophy:
+ * - Modern & Refined: Clean, clear aesthetics with a focus on user experience.
+ * - Interactive Feedback: Subtle transitions and animations for an engaging feel.
+ * - Glassmorphism: Layered, translucent UI elements for depth and sophistication.
+ * - Responsive: Seamless experience across desktop and mobile devices.
+ */
+
+/* ==========================================================================
+   1. Root Variables & Global Styles
+   ========================================================================== */
+:root {
+    /* Colors */
+    --color-red-piece: #c00;
+    --color-black-piece: #000;
+    --color-board-bg: #f0d9b5;
+    --color-board-line: #704214;
+    --color-board-border: #a0522d;
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+
+    /* Glassmorphism */
+    --glass-bg-color: rgba(255, 255, 255, 0.65);
+    --glass-blur-intensity: 10px;
+    --glass-border-color: rgba(255, 255, 255, 0.18);
+
+    /* Sizing & Spacing */
+    --border-radius-lg: 1.25rem;
+    --border-radius-md: 0.75rem;
+
+    /* Fonts */
+    --font-primary: 'Poppins', 'Noto Sans SC', sans-serif;
+    --font-serif-display: 'KaiTi', '楷体', serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+    color: #333;
+    overflow: hidden;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px; /* Increased max-width for game layout */
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* ==========================================================================
+   2. UI Components (Cards, Buttons, Forms, Notifications)
+   ========================================================================== */
+
+/* --- Card & Panel System (Glassmorphism) --- */
+.card {
+    background: var(--glass-bg-color);
+    backdrop-filter: blur(var(--glass-blur-intensity));
+    -webkit-backdrop-filter: blur(var(--glass-blur-intensity));
+    border-radius: var(--border-radius-lg);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border: 1px solid var(--glass-border-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.card-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem;
+}
+.card-header p {
+    color: #4b5563;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* --- Buttons --- */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    padding: 0.9rem 1.8rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transform: translateY(0);
+    cursor: pointer;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    width: 100%;
+}
+.btn:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    filter: brightness(1.1);
+}
+.btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.btn-primary { background: linear-gradient(to right, #2563eb, #1d4ed8); color: white; }
+.btn-secondary { background: linear-gradient(to right, #16a34a, #15803d); color: white; }
+.btn-join { width: auto; flex-grow: 0; padding: 0.9rem 2.5rem; }
+
+/* --- Form Elements --- */
+#joinRoomForm {
+    display: flex;
+    gap: 0.75rem;
+}
+input[type="text"] {
+    font-family: var(--font-primary);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: var(--border-radius-md);
+    padding: 0.9rem 1.25rem;
+    width: 100%;
+    flex-grow: 1;
+    outline: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    background: rgba(255,255,255,0.7);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+    letter-spacing: 0.1em;
+}
+input[type="text"]:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3), inset 0 2px 8px rgba(0,0,0,0.1);
+}
+input[type="text"]::placeholder {
+    color: rgba(0,0,0,0.4);
+    letter-spacing: normal;
+}
+
+/* --- Waiting Panel --- */
+.waiting-panel { text-align: center; }
+#roomCodeDisplay {
+    font-family: monospace;
+    font-size: 2.5rem;
+    letter-spacing: 0.2em;
+    background: rgba(255,255,255,0.7);
+    border: 2px dashed rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: pulse-light 2s infinite;
+    cursor: pointer;
+    color: #1f2937;
+}
+@keyframes pulse-light {
+    0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    50% { transform: scale(1.02); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+}
+#copyFeedback {
+    height: 1.5rem;
+    color: #16a34a;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    transition: opacity 0.3s;
+}
+
+/* --- Notifications --- */
+#notification-area {
+    min-height: 3.5rem;
+    margin-top: 1rem;
+    perspective: 800px;
+}
+.notification {
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: fade-in-down 0.5s ease-out;
+}
+.notification.error { background-color: rgba(254, 226, 226, 0.95); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.4); }
+.notification.success { background-color: rgba(220, 252, 231, 0.95); color: #166534; border: 1px solid rgba(34, 197, 94, 0.4); }
+
+@keyframes fade-in-down {
+    from { opacity: 0; transform: translateY(-20px) rotateX(20deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
+/* --- Spinner --- */
+.spinner {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-left-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+#createRoomBtn .spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-left-color: white;
+}
+#joinRoomBtn .spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-left-color: white;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ==========================================================================
+   3. Game Board & Pieces
+   ========================================================================== */
+
+/* --- Chessboard Layout --- */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+@media (min-width: 1024px) {
+    .game-container {
+        flex-direction: row;
+    }
+}
+.board-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+#board-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    aspect-ratio: 9 / 10;
+    background: #d9a566;
+    padding: 3%;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(0,0,0,0.2);
+    border: 3px solid var(--color-board-border);
+}
+
+/* --- Chessboard Grid & Markings --- */
+#board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-board-bg);
+    /* Create vertical and horizontal grid lines */
+    background-image:
+        repeating-linear-gradient(var(--color-board-line) 0 1px, transparent 1px 100%),
+        repeating-linear-gradient(90deg, var(--color-board-line) 0 1px, transparent 1px 100%);
+    background-size: 12.5% 11.111%; /* 100/8=12.5%, 100/9=11.111% */
+}
+
+/* River (楚河漢界) - Hide the middle horizontal line */
+#board::before {
+    content: '';
+    position: absolute;
+    background-color: var(--color-board-bg);
+    top: 44.445%; /* Positioned exactly in the middle row */
+    left: 1px;
+    right: 1px;
+    height: 11.11%;
+    z-index: 1;
+}
+
+/* Palaces (九宮格) - Diagonal lines */
+#board::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* Draw the four diagonal lines for the two palaces */
+    background-image:
+        /* Top Palace */
+        linear-gradient(to bottom right, transparent 49.5%, var(--color-board-line) 49.5%, var(--color-board-line) 50.5%, transparent 50.5%),
+        linear-gradient(to top right, transparent 49.5%, var(--color-board-line) 49.5%, var(--color-board-line) 50.5%, transparent 50.5%),
+        /* Bottom Palace */
+        linear-gradient(to bottom right, transparent 49.5%, var(--color-board-line) 49.5%, var(--color-board-line) 50.5%, transparent 50.5%),
+        linear-gradient(to top right, transparent 49.5%, var(--color-board-line) 49.5%, var(--color-board-line) 50.5%, transparent 50.5%);
+    background-size: 25% 22.222%; /* Palace is 2 squares wide, 2 squares high */
+    background-position: 37.5% 0, 37.5% 0, 37.5% 100%, 37.5% 100%; /* Center the palace horizontally */
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+#river-text {
+    position: absolute;
+    top: 44.44%;
+    left: 0;
+    right: 0;
+    height: 11.11%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15%;
+    font-family: var(--font-serif-display);
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    color: rgba(139, 69, 19, 0.5);
+    pointer-events: none;
+    z-index: 2;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+#river-text span:first-child { letter-spacing: 0.5em; }
+#river-text span:last-child { letter-spacing: 0.5em; }
+
+/* --- Chess Pieces --- */
+.piece {
+    position: absolute;
+    width: 10.5%;
+    height: 9.5%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif-display);
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: bold;
+    user-select: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, filter 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.5);
+    z-index: 20;
+    cursor: grab;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.piece.red {
+    background: radial-gradient(circle at 65% 35%, #ffdddd, #ff8a8a, var(--color-red-piece));
+    color: white;
+    border: 3px solid #a80000;
+}
+.piece.black {
+    background: radial-gradient(circle at 65% 35%, #f0f0f0, #ccc, #999);
+    color: var(--color-black-piece);
+    border: 3px solid #333;
+}
+
+/* Piece Interaction States */
+.piece.selected {
+    transform: translate(-50%, -50%) scale(1.15) translateY(-10px);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.8), 0 12px 25px rgba(0,0,0,0.3);
+    z-index: 30;
+    filter: brightness(1.1);
+}
+.piece.moving {
+    transition: top 0.3s ease-out, left 0.3s ease-out;
+    z-index: 99 !important;
+    cursor: grabbing;
+}
+
+.last-move-highlight {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 158, 11, 0.4);
+    border-radius: 50%;
+    animation: pulse-highlight 1.5s infinite;
+    z-index: 15;
+    pointer-events: none;
+}
+.move-indicator {
+    width: 50%;
+    height: 50%;
+    background-color: rgba(37, 99, 235, 0.4);
+    border: 2px solid rgba(37, 99, 235, 0.9);
+    border-radius: 50%;
+    z-index: 15;
+    pointer-events: none;
+    animation: pulse-indicator 1.5s infinite;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+}
+@keyframes pulse-indicator {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.7; }
+}
+@keyframes pulse-highlight {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.15); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 0.5; }
+}
+
+/* ==========================================================================
+   4. Info Panel & Game Status
+   ========================================================================== */
+
+#info-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+@media (min-width: 1024px) {
+    #info-panel {
+        width: 320px;
+        flex-shrink: 0;
+    }
+}
+
+#gameStatus {
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+#gameStatus.wait { background: linear-gradient(to right, #e0f2fe, #bae6fd); color: #075985; }
+#gameStatus.play { background: linear-gradient(to right, #fef9c3, #fef08a); color: #854d0e; animation: pulse-bg 2s infinite; }
+#gameStatus.win { background: linear-gradient(to right, #dcfce7, #bbf7d0); color: #15803d; }
+#gameStatus.lose { background: linear-gradient(to right, #fee2e2, #fecaca); color: #991b1b; }
+#gameStatus.info { background: linear-gradient(to right, #f3f4f6, #e5e7eb); color: #374151; }
+@keyframes pulse-bg {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+#info-panel .card-header { margin-bottom: 1rem; }
+#info-panel .card-header h2 { font-size: 1.5rem; margin: 0; }
+
+.player-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.player-tag {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.player-tag.red { background: linear-gradient(to right, #ef4444, #dc2626); color: white; }
+.player-tag.black { background: linear-gradient(to right, #1f2937, #111827); color: white; }
+.player-tag.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px currentColor, 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.control-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+}
+
+/* ==========================================================================
+   5. Modals & Utility Classes
+   ========================================================================== */
+
+dialog {
+    border: none;
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem;
+    max-width: 420px;
+    width: 90%;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    animation: modal-appear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes modal-appear {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+}
+.modal-content { text-align: center; }
+.modal-content h2 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: #1f2937;
+    margin-top:0;
+}
+.modal-content p {
+    color: #4b5563;
+    margin-bottom: 1.75rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.modal-actions .btn { width: auto; flex-grow: 1; }
+
+
+.hidden {
+    display: none !important;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #4b5563;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+}
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.divider span {
+    padding: 0 1.5rem;
+}
